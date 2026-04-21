@@ -123,28 +123,20 @@ h1, h2, h3 { line-height: 1.25; }
 .pipeline-row--duo > .pipe-col { width: 100%; }
 .pipe-peer-arrow {
   /* Vertically center to the orchestrator-node midline (the column holds only
-     a node + optional hidden card, so centering on the grid cell works). */
+     a node + optional hidden card, so centering on the grid cell works).
+     Styled to match .pipe-arrow / .pipeline-downarrow: same accent color,
+     same opacity, same font size. Only difference: ↔ glyph (arrowheads on
+     both ends) instead of ▶ because this is a bidirectional peer link. */
   align-self: center;
   justify-self: center;
   text-align: center;
-  color: var(--muted);
-  opacity: 0.75;
-  font-size: 1.25rem;
+  color: var(--accent);
+  opacity: 0.7;
+  font-size: 1.1rem;
   line-height: 1;
-  padding: 0 0.35rem;
-  position: relative;
+  padding: 0 0.1rem;
+  flex: 0 0 auto;
 }
-.pipe-peer-arrow::before,
-.pipe-peer-arrow::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 0.55rem;
-  border-top: 1px dashed var(--muted);
-  opacity: 0.6;
-}
-.pipe-peer-arrow::before { right: 100%; margin-right: 0.1rem; }
-.pipe-peer-arrow::after  { left: 100%;  margin-left: 0.1rem; }
 .pipeline-downarrow {
   display: block;
   width: 100%;
@@ -483,10 +475,7 @@ footer .footer-links {
     align-self: center;
     text-align: center;
     transform: rotate(90deg);
-    /* hide the side dashes on mobile; they don't read well rotated */
   }
-  .pipe-peer-arrow::before,
-  .pipe-peer-arrow::after { display: none; }
   /* Match all 8 agent cards + the Human CD card to the same visual width on mobile.
      The duo/solo rows cap at 320px; constrain the loop-flow and its columns the
      same way so every card in the diagram renders identically. */
