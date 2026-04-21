@@ -400,7 +400,6 @@ h1, h2, h3 { line-height: 1.25; }
 .project-page .blurb {
   font-size: 0.95rem;
   color: var(--text);
-  max-width: 62ch;
   margin-bottom: 1rem;
   line-height: 1.6;
 }
