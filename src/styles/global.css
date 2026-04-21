@@ -385,11 +385,6 @@ h1, h2, h3 { line-height: 1.25; }
 /* Project description page */
 .project-page {
   margin: 1.75rem 0 1rem;
-  max-width: 62ch;
-}
-/* When a project-page is present, align the following footer to the same reading width */
-.project-page ~ footer {
-  max-width: 62ch;
 }
 .project-page h2 {
   font-size: 1.8rem;
