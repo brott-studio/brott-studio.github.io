@@ -120,17 +120,30 @@ const projects = [
   <section class="section" id="loop">
     <h2 class="section-title">How the loop works</h2>
     <div class="pipeline">
-      <div class="pipeline-flow" aria-label="Sprint pipeline">
-        <span class="pipe-step">Gizmo</span><span class="pipe-arrow">→</span>
-        <span class="pipe-step">Ett</span><span class="pipe-arrow">→</span>
-        <span class="pipe-step">Nutts</span><span class="pipe-arrow">→</span>
-        <span class="pipe-step">Boltz</span><span class="pipe-arrow">→</span>
-        <span class="pipe-step">Optic</span><span class="pipe-arrow">→</span>
-        <span class="pipe-step">Specc</span><span class="pipe-arrow">↺</span>
+      <div class="pipeline-orchestrators" aria-label="Orchestrator layer">
+        <div class="orch-label">Interface &amp; orchestration</div>
+        <div class="orch-row">
+          <div class="orch-node"><span class="orch-emoji">🎬</span><span class="orch-name">The Bott</span><span class="orch-role">Executive Producer</span></div>
+          <div class="orch-node"><span class="orch-emoji">📋</span><span class="orch-name">Riv</span><span class="orch-role">Lead Orchestrator</span></div>
+          <div class="orch-node"><span class="orch-emoji">🧑</span><span class="orch-name">Creative Director</span><span class="orch-role">Creative arbiter</span></div>
+        </div>
+        <div class="orch-downarrows" aria-hidden="true">
+          <span>▼</span><span>▼</span><span>▼</span>
+        </div>
       </div>
-      <div class="pipeline-meta">
-        <div><strong>Riv</strong> — orchestrates the loop</div>
-        <div><strong>The Bott</strong> + <strong>Creative Director</strong> — interface layer</div>
+      <div class="pipeline-flow" aria-label="Sprint pipeline">
+        <div class="pipe-node"><span class="pipe-emoji">🎨</span><span class="pipe-name">Gizmo</span><span class="pipe-role">Design</span></div>
+        <span class="pipe-arrow" aria-hidden="true">▶</span>
+        <div class="pipe-node"><span class="pipe-emoji">📐</span><span class="pipe-name">Ett</span><span class="pipe-role">Plan</span></div>
+        <span class="pipe-arrow" aria-hidden="true">▶</span>
+        <div class="pipe-node"><span class="pipe-emoji">🔨</span><span class="pipe-name">Nutts</span><span class="pipe-role">Build</span></div>
+        <span class="pipe-arrow" aria-hidden="true">▶</span>
+        <div class="pipe-node"><span class="pipe-emoji">🔍</span><span class="pipe-name">Boltz</span><span class="pipe-role">Review</span></div>
+        <span class="pipe-arrow" aria-hidden="true">▶</span>
+        <div class="pipe-node"><span class="pipe-emoji">👁</span><span class="pipe-name">Optic</span><span class="pipe-role">Verify</span></div>
+        <span class="pipe-arrow" aria-hidden="true">▶</span>
+        <div class="pipe-node"><span class="pipe-emoji">📋</span><span class="pipe-name">Specc</span><span class="pipe-role">Audit</span></div>
+        <span class="pipe-loopback" aria-label="loops back to Gizmo">↺</span>
       </div>
       <div class="pipeline-copy">
         <p>
