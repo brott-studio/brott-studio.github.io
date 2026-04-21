@@ -148,69 +148,100 @@ const projects = [
 
       <div class="pipeline-downarrow" aria-hidden="true">▼</div>
 
-      {/* Row 2: The Bott + Riv as peers */}
+      {/* Row 2: The Bott + Riv as peers, with dashed peer arrow between */}
       <div class="pipeline-row pipeline-row--duo" aria-label="Orchestration layer">
-        {orchestrators.map((n) => (
+        <div class="pipe-col">
           <button
             type="button"
             class="pipe-node pipe-node--orch"
             aria-expanded="false"
-            aria-controls={`card-${n.id}`}
-            data-node={n.id}
+            aria-controls={`card-${orchestrators[0].id}`}
+            data-node={orchestrators[0].id}
           >
-            <span class="pipe-emoji">{n.emoji}</span>
-            <span class="pipe-name">{n.name}</span>
-            <span class="pipe-role">{n.role}</span>
+            <span class="pipe-emoji">{orchestrators[0].emoji}</span>
+            <span class="pipe-name">{orchestrators[0].name}</span>
+            <span class="pipe-role">{orchestrators[0].role}</span>
           </button>
-        ))}
-      </div>
-      {orchestrators.map((n) => (
-        <div
-          id={`card-${n.id}`}
-          class="pipe-card"
-          role="region"
-          hidden
-        >
-          <blockquote class="pipe-quote">“{n.quote}”</blockquote>
-          <p class="pipe-body">{n.body}</p>
+          <div
+            id={`card-${orchestrators[0].id}`}
+            class="pipe-card"
+            role="region"
+            hidden
+          >
+            <blockquote class="pipe-quote">“{orchestrators[0].quote}”</blockquote>
+            <p class="pipe-body">{orchestrators[0].body}</p>
+          </div>
         </div>
-      ))}
+        <span class="pipe-peer-arrow" aria-label="coordinates with">↔</span>
+        <div class="pipe-col">
+          <button
+            type="button"
+            class="pipe-node pipe-node--orch"
+            aria-expanded="false"
+            aria-controls={`card-${orchestrators[1].id}`}
+            data-node={orchestrators[1].id}
+          >
+            <span class="pipe-emoji">{orchestrators[1].emoji}</span>
+            <span class="pipe-name">{orchestrators[1].name}</span>
+            <span class="pipe-role">{orchestrators[1].role}</span>
+          </button>
+          <div
+            id={`card-${orchestrators[1].id}`}
+            class="pipe-card"
+            role="region"
+            hidden
+          >
+            <blockquote class="pipe-quote">“{orchestrators[1].quote}”</blockquote>
+            <p class="pipe-body">{orchestrators[1].body}</p>
+          </div>
+        </div>
+      </div>
 
       <div class="pipeline-downarrow" aria-hidden="true">▼</div>
 
-      {/* Row 3: main sprint loop */}
-      <div class="pipeline-flow" aria-label="Sprint pipeline">
-        {loop.map((n, i) => (
-          <>
-            <button
-              type="button"
-              class="pipe-node"
-              aria-expanded="false"
-              aria-controls={`card-${n.id}`}
-              data-node={n.id}
-            >
-              <span class="pipe-emoji">{n.emoji}</span>
-              <span class="pipe-name">{n.name}</span>
-              <span class="pipe-role">{n.role}</span>
-            </button>
-            {i < loop.length - 1 && (
-              <span class="pipe-arrow" aria-hidden="true">▶</span>
-            )}
-          </>
-        ))}
-        <span class="pipe-loopback" aria-label="loops back to Gizmo">↺</span>
-      </div>
-      {loop.map((n) => (
-        <div
-          id={`card-${n.id}`}
-          class="pipe-card"
-          role="region"
-          hidden
-        >
-          <blockquote class="pipe-quote">“{n.quote}”</blockquote>
-          <p class="pipe-body">{n.body}</p>
+      {/* Row 3: main sprint loop. Each node owns its column; card expands inline below its node. */}
+      <div class="pipeline-flow-wrap">
+        <div class="pipeline-flow" aria-label="Sprint pipeline">
+          {loop.map((n, i) => (
+            <>
+              <div class="pipe-col">
+                <button
+                  type="button"
+                  class="pipe-node"
+                  aria-expanded="false"
+                  aria-controls={`card-${n.id}`}
+                  data-node={n.id}
+                >
+                  <span class="pipe-emoji">{n.emoji}</span>
+                  <span class="pipe-name">{n.name}</span>
+                  <span class="pipe-role">{n.role}</span>
+                </button>
+                <div
+                  id={`card-${n.id}`}
+                  class="pipe-card"
+                  role="region"
+                  hidden
+                >
+                  <blockquote class="pipe-quote">“{n.quote}”</blockquote>
+                  <p class="pipe-body">{n.body}</p>
+                </div>
+              </div>
+              {i < loop.length - 1 && (
+                <span class="pipe-arrow" aria-hidden="true">▶</span>
+              )}
+            </>
+          ))}
         </div>
-      ))}
+        <svg class="pipe-loop-svg" aria-hidden="true" viewBox="0 0 100 20" preserveAspectRatio="none">
+          <defs>
+            <marker id="loopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" />
+            </marker>
+          </defs>
+          <path d="M 97 18 C 97 2, 3 2, 3 18" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" marker-end="url(#loopArrow)" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="pipe-loop-text" aria-hidden="true">↑ loops back to Gizmo</div>
+      </div>
 
       <div class="pipeline-copy">
         <p>
