@@ -210,6 +210,60 @@ h1, h2, h3 { line-height: 1.25; }
 }
 .current-project p + p { margin-top: 0.5rem; }
 
+/* Project description page */
+.project-page {
+  margin: 1.75rem 0 1rem;
+}
+.project-page h2 {
+  font-size: 1.8rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+.project-page .subtitle {
+  color: var(--accent);
+  font-style: italic;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+}
+.project-page .blurb {
+  font-size: 0.95rem;
+  color: var(--text);
+  max-width: 62ch;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+.project-page .status {
+  display: inline-block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0.5rem 0 1.25rem;
+}
+.project-page .status strong { color: var(--text); }
+.project-page .cta-row {
+  margin: 1.5rem 0 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.project-page .cta {
+  display: inline-block;
+  background: var(--accent);
+  color: #0d1117;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.project-page .cta:hover {
+  filter: brightness(1.08);
+  text-decoration: none;
+}
+
 /* Footer */
 footer {
   margin-top: 3rem;
