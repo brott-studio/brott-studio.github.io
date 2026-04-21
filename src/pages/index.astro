@@ -67,7 +67,7 @@ const loop = [
   },
   {
     id: 'optic',
-    emoji: '👁',
+    emoji: '👁️',
     name: 'Optic',
     role: 'Verifier',
     quote: 'Every sprint I get to find out whether the game exists yet.',
@@ -148,56 +148,34 @@ const projects = [
 
       <div class="pipeline-downarrow" aria-hidden="true">▼</div>
 
-      {/* Row 2: The Bott + Riv as peers, with dashed peer arrow between */}
-      <div class="pipeline-row pipeline-row--duo" aria-label="Orchestration layer">
-        <div class="pipe-col">
-          <button
-            type="button"
-            class="pipe-node pipe-node--orch"
-            aria-expanded="false"
-            aria-controls={`card-${orchestrators[0].id}`}
-            data-node={orchestrators[0].id}
-          >
-            <span class="pipe-emoji">{orchestrators[0].emoji}</span>
-            <span class="pipe-name">{orchestrators[0].name}</span>
-            <span class="pipe-role">{orchestrators[0].role}</span>
-          </button>
+      {/* Row 2: The Bott (above Riv), stacked vertically to match Human → The Bott styling */}
+      {orchestrators.map((o, idx) => (
+        <>
+          <div class="pipeline-row pipeline-row--solo" aria-label={idx === 0 ? 'Executive producer layer' : 'Orchestration layer'}>
+            <button
+              type="button"
+              class="pipe-node pipe-node--orch"
+              aria-expanded="false"
+              aria-controls={`card-${o.id}`}
+              data-node={o.id}
+            >
+              <span class="pipe-emoji">{o.emoji}</span>
+              <span class="pipe-name">{o.name}</span>
+              <span class="pipe-role">{o.role}</span>
+            </button>
+          </div>
           <div
-            id={`card-${orchestrators[0].id}`}
+            id={`card-${o.id}`}
             class="pipe-card"
             role="region"
             hidden
           >
-            <blockquote class="pipe-quote">“{orchestrators[0].quote}”</blockquote>
-            <p class="pipe-body">{orchestrators[0].body}</p>
+            <blockquote class="pipe-quote">“{o.quote}”</blockquote>
+            <p class="pipe-body">{o.body}</p>
           </div>
-        </div>
-        <span class="pipe-peer-arrow" aria-label="coordinates with">↔</span>
-        <div class="pipe-col">
-          <button
-            type="button"
-            class="pipe-node pipe-node--orch"
-            aria-expanded="false"
-            aria-controls={`card-${orchestrators[1].id}`}
-            data-node={orchestrators[1].id}
-          >
-            <span class="pipe-emoji">{orchestrators[1].emoji}</span>
-            <span class="pipe-name">{orchestrators[1].name}</span>
-            <span class="pipe-role">{orchestrators[1].role}</span>
-          </button>
-          <div
-            id={`card-${orchestrators[1].id}`}
-            class="pipe-card"
-            role="region"
-            hidden
-          >
-            <blockquote class="pipe-quote">“{orchestrators[1].quote}”</blockquote>
-            <p class="pipe-body">{orchestrators[1].body}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pipeline-downarrow" aria-hidden="true">▼</div>
+          <div class="pipeline-downarrow" aria-hidden="true">▼</div>
+        </>
+      ))}
 
       {/* Row 3: main sprint loop. Each node owns its column; card expands inline below its node. */}
       <div class="pipeline-flow-wrap">
