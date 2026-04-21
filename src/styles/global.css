@@ -133,19 +133,21 @@ h1, h2, h3 { line-height: 1.25; }
 .pipeline-flow-wrap {
   position: relative;
   margin: 0.3rem 0 1.25rem;
-  /* Reserve space for an absolutely-positioned open card below the flow row. */
-  padding-bottom: 0;
+  /* Desktop: reserve space for the loopback SVG that anchors below the flow.
+     Mobile override drops this to 0 (SVG hidden, text fallback shown). */
+  padding-bottom: 64px;
   transition: padding-bottom 0.2s ease;
 }
-/* Reserve space below the flow row on desktop so the absolute-positioned card
-   doesn't overlap .pipeline-copy. Height is set dynamically by JS to match the
-   open card exactly; the +1rem covers the card's top margin. Not needed on
-   mobile (cards are in-flow). */
+/* Reserve extra space below the flow row on desktop so the absolutely-positioned
+   open card stacks below the loopback SVG, not overlapping .pipeline-copy.
+   Height is set dynamically by JS to match the open card exactly. */
 .pipeline-flow-wrap:has(.pipe-card--open) {
-  padding-bottom: calc(var(--loop-card-h, 14rem) + 1rem);
+  padding-bottom: calc(64px + var(--loop-card-h, 14rem) + 1rem);
 }
 @media (max-width: 720px) {
+  .pipeline-flow-wrap { padding-bottom: 0; }
   .pipeline-flow-wrap:has(.pipe-card--open) { padding-bottom: 0; }
+  .pipe-loop-svg { display: none; }
 }
 .pipeline-flow {
   display: flex;
@@ -175,7 +177,9 @@ h1, h2, h3 { line-height: 1.25; }
 .pipeline-flow { position: relative; }
 .pipe-col .pipe-card {
   position: absolute;
-  top: 100%;
+  /* Stack below the loopback SVG (64px reserved on desktop). On mobile the
+     card becomes position: static so this value is ignored. */
+  top: calc(100% + 64px);
   left: 50%;
   right: auto;
   bottom: auto;
@@ -195,15 +199,18 @@ h1, h2, h3 { line-height: 1.25; }
   text-align: center;
 }
 
-/* Loopback SVG overlay: sits above the pipeline-flow, starts at Specc (right)
-   and arcs to Gizmo (left). Clipped to the top margin so it doesn't overlap nodes. */
+/* Loopback SVG overlay (desktop): sits below the pipeline-flow row, draws a
+   bracket from Specc's bottom ↓ down, ← across, ↑ up into Gizmo's bottom.
+   Geometry is computed at runtime by JS so it anchors to actual node
+   positions. Hidden on mobile (mobile uses the text fallback below). */
 .pipe-loop-svg {
   position: absolute;
-  top: -14px;
+  top: 100%;
   left: 0;
   right: 0;
   width: 100%;
-  height: 34px;
+  height: 48px;
+  margin-top: 6px;
   pointer-events: none;
   z-index: 0;
   overflow: visible;
