@@ -169,6 +169,27 @@ h1, h2, h3 { line-height: 1.25; }
 .pipe-col .pipe-node { max-width: none; flex: 0 0 auto; }
 .pipe-col .pipe-card { margin-left: 0; margin-right: 0; max-width: none; }
 
+/* Phase label above each loop node (column header). */
+.pipe-phase {
+  display: block;
+  text-align: center;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.65;
+  margin-bottom: 0.4rem;
+  line-height: 1;
+}
+
+/* Arrows in the loop need to align with the node center, not the top of the column
+   (the phase label lives above the node and shifts the node down). */
+.pipeline-flow > .pipe-arrow {
+  align-self: flex-start;
+  /* phase label height (~0.62rem * 1 line + 0.4rem gap) ≈ 1.1rem, plus half node height */
+  margin-top: calc(1.1rem + 1.6rem);
+}
+
 /* Loopback SVG overlay: sits above the pipeline-flow, starts at Specc (right)
    and arcs to Gizmo (left). Clipped to the top margin so it doesn't overlap nodes. */
 .pipe-loop-svg {
@@ -446,6 +467,12 @@ footer .footer-links {
     font-size: 1.1rem;
     padding: 0.1rem 0;
   }
+  .pipe-phase {
+    text-align: left;
+    margin-bottom: 0.15rem;
+    margin-left: 0.1rem;
+  }
+  .pipeline-flow > .pipe-arrow { margin-top: 0; }
   /* On mobile, swap SVG loopback for a text fallback. */
   .pipe-loop-svg { display: none; }
   .pipe-loop-text { display: block; }
