@@ -58,7 +58,13 @@ h1, h2, h3 { line-height: 1.25; }
 .hero-tagline {
   font-size: 1.05rem;
   color: var(--text);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+.hero-subtitle {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
 }
 .hero-sub {
   color: var(--muted);
