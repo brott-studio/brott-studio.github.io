@@ -104,7 +104,7 @@ h1, h2, h3 { line-height: 1.25; }
   justify-content: center;
 }
 .pipeline-row--duo {
-  grid-template-columns: minmax(140px, 220px) auto minmax(140px, 220px);
+  grid-template-columns: minmax(88px, 140px) auto minmax(88px, 140px);
   justify-content: center;
   align-items: start;
   justify-items: center;
@@ -236,18 +236,14 @@ h1, h2, h3 { line-height: 1.25; }
   background: var(--surface-2);
   box-shadow: 0 0 0 1px var(--accent) inset;
 }
-/* Orchestrator nodes: dashed border like before */
+/* Orchestrator nodes: dashed border to visually distinguish from the loop,
+   but otherwise sized identically to loop nodes so all 8 cards match. */
 .pipe-node--orch {
   border-style: dashed;
-  padding: 0.65rem 0.5rem 0.55rem;
-  max-width: none;
 }
-.pipe-node--orch .pipe-emoji { font-size: 1.4rem; }
-.pipe-node--orch .pipe-name { font-size: 0.95rem; }
 .pipe-node--orch .pipe-role {
   text-transform: none;
   letter-spacing: 0;
-  font-size: 0.72rem;
 }
 
 /* Expandable card (revealed below the clicked node) */
@@ -484,14 +480,6 @@ footer .footer-links {
   .pipe-peer-arrow::after { display: none; }
   .pipe-col { max-width: none; }
   .pipeline-row--solo { grid-template-columns: 1fr; max-width: 320px; }
-  .pipe-node--orch {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.65rem 0.85rem;
-    text-align: center;
-  }
   .pipe-node--orch .pipe-role { margin-left: 0; text-align: center; }
 }
 
