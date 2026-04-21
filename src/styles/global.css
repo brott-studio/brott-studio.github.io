@@ -138,9 +138,11 @@ h1, h2, h3 { line-height: 1.25; }
   transition: padding-bottom 0.2s ease;
 }
 /* Reserve space below the flow row on desktop so the absolute-positioned card
-   doesn't overlap .pipeline-copy. Not needed on mobile (cards are in-flow). */
+   doesn't overlap .pipeline-copy. Height is set dynamically by JS to match the
+   open card exactly; the +1rem covers the card's top margin. Not needed on
+   mobile (cards are in-flow). */
 .pipeline-flow-wrap:has(.pipe-card--open) {
-  padding-bottom: 14rem;
+  padding-bottom: calc(var(--loop-card-h, 14rem) + 1rem);
 }
 @media (max-width: 720px) {
   .pipeline-flow-wrap:has(.pipe-card--open) { padding-bottom: 0; }
