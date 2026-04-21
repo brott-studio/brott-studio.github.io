@@ -125,35 +125,125 @@ h1, h2, h3 { line-height: 1.25; }
 .pipeline {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.9rem;
+  border-radius: 8px;
+  padding: 1.5rem 1.25rem 1.25rem;
 }
+
+/* Orchestrator layer (sits above the main loop) */
+.pipeline-orchestrators {
+  margin-bottom: 0.25rem;
+}
+.orch-label {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.orch-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.orch-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 0.55rem 0.4rem;
+  text-align: center;
+}
+.orch-emoji { font-size: 1.3rem; line-height: 1; }
+.orch-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.orch-role { font-size: 0.7rem; color: var(--muted); }
+.orch-downarrows {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 640px;
+  margin: 0.3rem auto 0.9rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-align: center;
+  opacity: 0.55;
+}
+
+/* Main sprint pipeline (the loop) */
 .pipeline-flow {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.3rem 0.4rem;
-  font-size: 0.82rem;
-  margin-bottom: 0.7rem;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: 0.3rem 0 1.25rem;
+  padding: 0.25rem 0;
+  overflow-x: auto;
 }
-.pipe-step {
+.pipe-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 88px;
+  flex: 1 1 0;
+  max-width: 130px;
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.25rem 0.55rem;
-  white-space: nowrap;
-  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.85rem 0.5rem 0.7rem;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
 }
-.pipe-arrow { color: var(--muted); font-size: 0.7rem; }
-.pipeline-meta {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.4rem 1rem;
-  font-size: 0.82rem;
+.pipe-node:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+.pipe-emoji {
+  font-size: 2rem;
+  line-height: 1;
+  display: block;
+}
+.pipe-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+.pipe-role {
+  font-size: 0.7rem;
   color: var(--muted);
-  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
-.pipeline-meta strong { color: var(--text); }
+.pipe-arrow {
+  align-self: center;
+  color: var(--accent);
+  font-size: 1.1rem;
+  opacity: 0.7;
+  flex: 0 0 auto;
+  padding: 0 0.1rem;
+}
+.pipe-loopback {
+  align-self: center;
+  color: var(--accent);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-left: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
 .pipeline-copy {
   font-size: 0.88rem;
   color: var(--text);
@@ -282,8 +372,41 @@ footer .footer-links {
 }
 
 /* Responsive */
+@media (max-width: 720px) {
+  .pipeline-flow {
+    flex-direction: column;
+    align-items: stretch;
+    overflow-x: visible;
+  }
+  .pipe-node {
+    max-width: none;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    text-align: left;
+  }
+  .pipe-emoji { font-size: 1.7rem; }
+  .pipe-name { font-size: 1.05rem; }
+  .pipe-role { margin-left: auto; }
+  .pipe-arrow {
+    align-self: center;
+    transform: rotate(90deg);
+    font-size: 1.1rem;
+    padding: 0.1rem 0;
+  }
+  .pipe-loopback {
+    align-self: center;
+    margin-left: 0;
+    margin-top: 0.2rem;
+  }
+  .orch-row { grid-template-columns: 1fr; max-width: 320px; }
+  .orch-downarrows { grid-template-columns: 1fr; }
+  .orch-downarrows span:nth-child(n+2) { display: none; }
+}
+
 @media (max-width: 520px) {
   body { padding: 1rem; }
   .hero-header h1 { font-size: 1.35rem; }
-  .pipeline-flow { font-size: 0.75rem; }
 }
