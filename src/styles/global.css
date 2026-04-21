@@ -104,10 +104,34 @@ h1, h2, h3 { line-height: 1.25; }
   justify-content: center;
 }
 .pipeline-row--duo {
-  grid-template-columns: repeat(2, minmax(140px, 220px));
+  grid-template-columns: minmax(140px, 220px) auto minmax(140px, 220px);
   justify-content: center;
-  max-width: 480px;
+  align-items: start;
+  max-width: 560px;
+  gap: 0.5rem 0.75rem;
 }
+.pipe-peer-arrow {
+  align-self: start;
+  /* Vertically center against the orchestrator node height */
+  margin-top: 1.35rem;
+  color: var(--muted);
+  opacity: 0.75;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0 0.35rem;
+  position: relative;
+}
+.pipe-peer-arrow::before,
+.pipe-peer-arrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0.55rem;
+  border-top: 1px dashed var(--muted);
+  opacity: 0.6;
+}
+.pipe-peer-arrow::before { right: 100%; margin-right: 0.1rem; }
+.pipe-peer-arrow::after  { left: 100%;  margin-left: 0.1rem; }
 .pipeline-downarrow {
   text-align: center;
   color: var(--muted);
@@ -118,15 +142,74 @@ h1, h2, h3 { line-height: 1.25; }
 }
 
 /* Main sprint pipeline (the loop) */
+.pipeline-flow-wrap {
+  position: relative;
+  margin: 0.3rem 0 1.25rem;
+}
 .pipeline-flow {
   display: flex;
   flex-wrap: nowrap;
-  align-items: stretch;
+  align-items: flex-start;
   justify-content: center;
   gap: 0.25rem;
-  margin: 0.3rem 0 1.25rem;
   padding: 0.25rem 0;
   overflow-x: auto;
+  position: relative;
+  z-index: 1;
+}
+/* Each node occupies its own column; its card expands directly beneath it. */
+.pipe-col {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 0;
+  min-width: 88px;
+  max-width: 140px;
+}
+.pipe-col .pipe-node { max-width: none; flex: 0 0 auto; }
+.pipe-col .pipe-card { margin-left: 0; margin-right: 0; max-width: none; }
+
+/* Phase label above each loop node (column header). */
+.pipe-phase {
+  display: block;
+  text-align: center;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.65;
+  margin-bottom: 0.4rem;
+  line-height: 1;
+}
+
+/* Arrows in the loop need to align with the node center, not the top of the column
+   (the phase label lives above the node and shifts the node down). */
+.pipeline-flow > .pipe-arrow {
+  align-self: flex-start;
+  /* phase label height (~0.62rem * 1 line + 0.4rem gap) ≈ 1.1rem, plus half node height */
+  margin-top: calc(1.1rem + 1.6rem);
+}
+
+/* Loopback SVG overlay: sits above the pipeline-flow, starts at Specc (right)
+   and arcs to Gizmo (left). Clipped to the top margin so it doesn't overlap nodes. */
+.pipe-loop-svg {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 34px;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+.pipe-loop-text {
+  display: none;
+  text-align: center;
+  color: var(--accent);
+  font-size: 0.82rem;
+  margin-top: 0.4rem;
+  opacity: 0.85;
 }
 .pipe-node {
   display: flex;
@@ -230,19 +313,7 @@ h1, h2, h3 { line-height: 1.25; }
   flex: 0 0 auto;
   padding: 0 0.1rem;
 }
-.pipe-loopback {
-  align-self: center;
-  color: var(--accent);
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-left: 0.35rem;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--bg);
-  line-height: 1;
-  flex: 0 0 auto;
-}
+
 
 .pipeline-copy {
   font-size: 0.88rem;
@@ -396,12 +467,30 @@ footer .footer-links {
     font-size: 1.1rem;
     padding: 0.1rem 0;
   }
-  .pipe-loopback {
-    align-self: center;
-    margin-left: 0;
-    margin-top: 0.2rem;
+  .pipe-phase {
+    text-align: left;
+    margin-bottom: 0.15rem;
+    margin-left: 0.1rem;
   }
-  .pipeline-row--duo { grid-template-columns: 1fr; max-width: 320px; }
+  .pipeline-flow > .pipe-arrow { margin-top: 0; }
+  /* On mobile, swap SVG loopback for a text fallback. */
+  .pipe-loop-svg { display: none; }
+  .pipe-loop-text { display: block; }
+  /* Stack the orchestrator row vertically; the peer arrow becomes a vertical dashed hint. */
+  .pipeline-row--duo {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    gap: 0.4rem;
+  }
+  .pipe-peer-arrow {
+    justify-self: center;
+    margin-top: 0;
+    transform: rotate(90deg);
+    /* hide the side dashes on mobile; they don't read well rotated */
+  }
+  .pipe-peer-arrow::before,
+  .pipe-peer-arrow::after { display: none; }
+  .pipe-col { max-width: none; }
   .pipeline-row--solo { grid-template-columns: 1fr; max-width: 320px; }
   .pipe-node--orch {
     flex-direction: row;
