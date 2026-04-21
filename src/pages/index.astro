@@ -179,8 +179,7 @@ const projects = [
 
       {/* Row 3: main sprint loop. Each node owns its column; card expands inline below its node. */}
       <div class="pipeline-flow-wrap">
-        <div class="pipeline-flow" aria-label="Sprint pipeline">
-          {loop.map((n, i) => (
+        <div class="pipeline-flow" aria-label="Sprint pipeline">          {loop.map((n, i) => (
             <>
               <div class="pipe-col">
                 <button
@@ -209,15 +208,16 @@ const projects = [
               )}
             </>
           ))}
+          <svg class="pipe-loop-svg" aria-hidden="true" preserveAspectRatio="none">
+            <defs>
+              <marker id="loopArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" />
+              </marker>
+            </defs>
+            <path class="pipe-loop-path" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#loopArrow)" />
+            <text class="pipe-loop-label" text-anchor="middle" fill="var(--accent)" font-size="12" opacity="0.85">↻ next sprint</text>
+          </svg>
         </div>
-        <svg class="pipe-loop-svg" aria-hidden="true" viewBox="0 0 100 20" preserveAspectRatio="none">
-          <defs>
-            <marker id="loopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" />
-            </marker>
-          </defs>
-          <path d="M 97 18 C 97 2, 3 2, 3 18" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" marker-end="url(#loopArrow)" vector-effect="non-scaling-stroke" />
-        </svg>
         <div class="pipe-loop-text" aria-hidden="true">↑ loops back to Gizmo</div>
       </div>
 
@@ -303,6 +303,52 @@ const projects = [
           requestAnimationFrame(() => card.classList.add('pipe-card--open'));
         }
       }
+
+      // Draw the desktop loopback path: down from Specc, left across, up into
+      // Gizmo. Computed from real node positions so it stays accurate across
+      // viewport widths. Hidden on mobile via CSS; we still compute (cheap).
+      function drawLoopback() {
+        const svg = document.querySelector('.pipe-loop-svg');
+        const flow = document.querySelector('.pipeline-flow');
+        const gizmo = document.querySelector('.pipe-node[data-node="gizmo"]');
+        const specc = document.querySelector('.pipe-node[data-node="specc"]');
+        const path = svg && svg.querySelector('.pipe-loop-path');
+        const label = svg && svg.querySelector('.pipe-loop-label');
+        if (!svg || !flow || !gizmo || !specc || !path) return;
+        const fr = flow.getBoundingClientRect();
+        const gr = gizmo.getBoundingClientRect();
+        const sr = specc.getBoundingClientRect();
+        // Coordinates relative to the flow (svg left/width match flow).
+        const startX = sr.left - fr.left + sr.width / 2;
+        const endX = gr.left - fr.left + gr.width / 2;
+        const H = 48; // svg height (must match CSS)
+        const trunkY = H - 8; // horizontal line y within svg
+        // radius for rounded corners at the two turns
+        const r = 6;
+        // Path: M startX,0 V trunkY-r Q (corner) H endX+r Q (corner) V 4
+        const d = [
+          `M ${startX} 0`,
+          `V ${trunkY - r}`,
+          `Q ${startX} ${trunkY} ${startX - r} ${trunkY}`,
+          `H ${endX + r}`,
+          `Q ${endX} ${trunkY} ${endX} ${trunkY - r}`,
+          `V 4`,
+        ].join(' ');
+        path.setAttribute('d', d);
+        // SVG viewBox = width x height so coordinates are in CSS pixels
+        svg.setAttribute('viewBox', `0 0 ${fr.width} ${H}`);
+        // Label sits above the horizontal trunk, centered between start and end
+        if (label) {
+          label.setAttribute('x', (startX + endX) / 2);
+          label.setAttribute('y', trunkY - 6);
+        }
+      }
+      drawLoopback();
+      let rafId = 0;
+      window.addEventListener('resize', () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(drawLoopback);
+      });
     })();
   </script>
 </Base>
