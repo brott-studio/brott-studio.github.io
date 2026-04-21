@@ -100,8 +100,17 @@ h1, h2, h3 { line-height: 1.25; }
   margin: 0 auto;
 }
 .pipeline-row--solo {
-  grid-template-columns: minmax(160px, 220px);
+  /* Match the duo row's per-column width so HCD renders the same size as
+     The Bott / Riv on desktop. Was minmax(160px, 220px), which paired with
+     .pipe-node's 130px cap made HCD ~10px narrower than its peers. */
+  grid-template-columns: minmax(88px, 140px);
   justify-content: center;
+}
+.pipeline-row--solo > .pipe-node {
+  /* Override the base .pipe-node max-width (130px) so HCD can fill the
+     140px cell and match Bott/Riv exactly. Same trick .pipe-col already
+     uses for the duo/flow rows. */
+  max-width: none;
 }
 .pipeline-row--duo {
   grid-template-columns: minmax(88px, 140px) auto minmax(88px, 140px);
