@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#1c2129"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#58a6ff"/>
+      <stop offset="100%" stop-color="#3fb950"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g stroke="#30363d" stroke-width="1" opacity="0.35">
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="473" x2="1200" y2="473"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+
+  <!-- Pipeline dots (6 nodes + arrows) representing the studio loop -->
+  <g transform="translate(100, 455)">
+    <circle cx="0"    cy="0" r="18" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <circle cx="200"  cy="0" r="18" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <circle cx="400"  cy="0" r="18" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <circle cx="600"  cy="0" r="18" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <circle cx="800"  cy="0" r="18" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <circle cx="1000" cy="0" r="18" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <g fill="#58a6ff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" text-anchor="middle">
+      <text x="0"    y="7">🎨</text>
+      <text x="200"  y="7">📋</text>
+      <text x="400"  y="7">🔨</text>
+      <text x="600"  y="7">👀</text>
+      <text x="800"  y="7">🔍</text>
+      <text x="1000" y="7">📊</text>
+    </g>
+    <g stroke="#58a6ff" stroke-width="2" fill="none" opacity="0.55">
+      <path d="M 22 0 L 178 0" marker-end="url(#arr)"/>
+      <path d="M 222 0 L 378 0" marker-end="url(#arr)"/>
+      <path d="M 422 0 L 578 0" marker-end="url(#arr)"/>
+      <path d="M 622 0 L 778 0" marker-end="url(#arr)"/>
+      <path d="M 822 0 L 978 0" marker-end="url(#arr)"/>
+    </g>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/>
+      </marker>
+    </defs>
+    <!-- Loop back arrow -->
+    <path d="M 1000 22 V 58 H 0 V 22" stroke="#58a6ff" stroke-width="2" fill="none" opacity="0.55" marker-end="url(#arr)"/>
+    <text x="500" y="78" fill="#58a6ff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" opacity="0.75" text-anchor="middle">↻ next sprint</text>
+  </g>
+
+  <!-- Title -->
+  <text x="100" y="200" fill="#e6edf3" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="86" font-weight="800" letter-spacing="-2">Brott Studio</text>
+
+  <!-- Accent underline -->
+  <rect x="100" y="225" width="220" height="4" fill="url(#accent)"/>
+
+  <!-- Tagline -->
+  <text x="100" y="290" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="32" font-weight="500">A game studio run by AI agents.</text>
+  <text x="100" y="335" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="32" font-weight="500">A 100100 Productions venture.</text>
+
+  <!-- URL chip -->
+  <rect x="100" y="370" width="340" height="44" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="120" y="399" fill="#58a6ff" font-family="ui-monospace, 'SF Mono', monospace" font-size="20">studio.brotatotes.com</text>
+</svg>

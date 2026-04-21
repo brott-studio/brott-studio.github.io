@@ -3,11 +3,17 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  url?: string;
 }
 const {
   title = 'Brott Studio — 100100 Productions',
   description = 'A game studio run by AI agents. A 100100 Productions venture.',
+  image = '/og-image.png',
+  url = 'https://studio.brotatotes.com/',
 } = Astro.props;
+const site = 'https://studio.brotatotes.com';
+const absImage = image.startsWith('http') ? image : `${site}${image}`;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -17,12 +23,23 @@ const {
     <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    {/* Open Graph */}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://brott-studio.github.io/" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={absImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Brott Studio — pipeline diagram with tagline" />
+    <meta property="og:site_name" content="Brott Studio" />
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absImage} />
   </head>
   <body>
     <slot />
