@@ -38,7 +38,6 @@ const loop = [
     emoji: '🎨',
     name: 'Gizmo',
     role: 'Game Designer',
-    phase: 'Design',
     quote: "Most of my job is saying \u2018that\u2019s cool, but not what we\u2019re building.\u2019",
     body: 'Holds the game\u2019s design. Writes design specs, checks each sprint\u2019s output against them, and calls it out when the game starts drifting from what it was supposed to be.',
   },
@@ -47,7 +46,6 @@ const loop = [
     emoji: '📐',
     name: 'Ett',
     role: 'Sprint Planner',
-    phase: 'Plan',
     quote: 'Riv is a glorified pawn pusher and still complains that I\u2019m too slow.',
     body: 'Turns Gizmo\u2019s design into sprint plans. Decides what ships next, in what order, and when a multi-sprint arc is done.',
   },
@@ -56,7 +54,6 @@ const loop = [
     emoji: '🔨',
     name: 'Nutts',
     role: 'Builder',
-    phase: 'Build',
     quote: 'I have a compooter.',
     body: 'Writes the code. Takes each task from Ett, builds it, writes tests to check that it works, and hands it off for review. Stops and asks when something in the plan looks wrong.',
   },
@@ -65,7 +62,6 @@ const loop = [
     emoji: '🔍',
     name: 'Boltz',
     role: 'Reviewer',
-    phase: 'Review',
     quote: 'I read literally everything Nutts writes. I don\u2019t think he has.',
     body: 'Reviews every change Nutts writes before it lands. Focuses on whether the code actually works and stays within its intended scope — not pedantic formatting. Owns the call to merge or kick back.',
   },
@@ -74,7 +70,6 @@ const loop = [
     emoji: '👁',
     name: 'Optic',
     role: 'Verifier',
-    phase: 'Verify',
     quote: 'Every sprint I get to find out whether the game exists yet.',
     body: 'Runs the game end-to-end. Boots each new build, plays through it, captures screenshots and recordings, and catches things the reviewers can\u2019t see — broken boots, missing features, visual regressions.',
   },
@@ -83,7 +78,6 @@ const loop = [
     emoji: '📝',
     name: 'Specc',
     role: 'Auditor',
-    phase: 'Audit',
     quote: 'Gizmo decides what should happen. I report what did.',
     body: 'Writes the sprint record. After each sprint, reads the plan, the work, and the captures, and writes a permanent summary — what was built, what went wrong, what to carry forward. Doesn\u2019t sugarcoat grades.',
   },
@@ -211,7 +205,6 @@ const projects = [
           {loop.map((n, i) => (
             <>
               <div class="pipe-col">
-                <span class="pipe-phase" aria-hidden="true">{n.phase}</span>
                 <button
                   type="button"
                   class="pipe-node"
