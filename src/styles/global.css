@@ -175,26 +175,9 @@ h1, h2, h3 { line-height: 1.25; }
 .pipe-col .pipe-node { max-width: none; flex: 0 0 auto; }
 .pipe-col .pipe-card { margin-left: 0; margin-right: 0; max-width: none; }
 
-/* Phase label above each loop node (column header). */
-.pipe-phase {
-  display: block;
-  text-align: center;
-  font-size: 0.62rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--muted);
-  opacity: 0.65;
-  margin-bottom: 0.4rem;
-  line-height: 1;
-}
-
-/* Arrows in the loop need to align with the node's vertical center, not the
-   column's center (the phase label above the node shifts the node down).
-   Use align-self: center with a padding-top equal to (phase label + its
-   bottom margin) so the visible glyph's center lands on the node's midline. */
+/* Arrows in the loop align with the node's vertical center. */
 .pipeline-flow > .pipe-arrow {
   align-self: center;
-  padding-top: 1.1rem;
   text-align: center;
 }
 
@@ -481,12 +464,6 @@ footer .footer-links {
     padding: 0.1rem 0;
     text-align: center;
   }
-  .pipe-phase {
-    text-align: center;
-    margin-bottom: 0.3rem;
-    margin-left: 0;
-  }
-  .pipeline-flow > .pipe-arrow { padding-top: 0; margin-top: 0; }
   /* On mobile, swap SVG loopback for a text fallback. */
   .pipe-loop-svg { display: none; }
   .pipe-loop-text { display: block; }
