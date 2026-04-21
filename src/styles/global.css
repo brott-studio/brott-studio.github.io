@@ -107,13 +107,17 @@ h1, h2, h3 { line-height: 1.25; }
   grid-template-columns: minmax(140px, 220px) auto minmax(140px, 220px);
   justify-content: center;
   align-items: start;
+  justify-items: center;
   max-width: 560px;
   gap: 0.5rem 0.75rem;
 }
+.pipeline-row--duo > .pipe-col { width: 100%; }
 .pipe-peer-arrow {
-  align-self: start;
-  /* Vertically center against the orchestrator node height */
-  margin-top: 1.35rem;
+  /* Vertically center to the orchestrator-node midline (the column holds only
+     a node + optional hidden card, so centering on the grid cell works). */
+  align-self: center;
+  justify-self: center;
+  text-align: center;
   color: var(--muted);
   opacity: 0.75;
   font-size: 1.25rem;
@@ -133,11 +137,13 @@ h1, h2, h3 { line-height: 1.25; }
 .pipe-peer-arrow::before { right: 100%; margin-right: 0.1rem; }
 .pipe-peer-arrow::after  { left: 100%;  margin-left: 0.1rem; }
 .pipeline-downarrow {
+  display: block;
+  width: 100%;
   text-align: center;
   color: var(--muted);
   font-size: 0.8rem;
   opacity: 0.55;
-  margin: 0.4rem 0;
+  margin: 0.4rem auto;
   line-height: 1;
 }
 
@@ -182,12 +188,14 @@ h1, h2, h3 { line-height: 1.25; }
   line-height: 1;
 }
 
-/* Arrows in the loop need to align with the node center, not the top of the column
-   (the phase label lives above the node and shifts the node down). */
+/* Arrows in the loop need to align with the node's vertical center, not the
+   column's center (the phase label above the node shifts the node down).
+   Use align-self: center with a padding-top equal to (phase label + its
+   bottom margin) so the visible glyph's center lands on the node's midline. */
 .pipeline-flow > .pipe-arrow {
-  align-self: flex-start;
-  /* phase label height (~0.62rem * 1 line + 0.4rem gap) ≈ 1.1rem, plus half node height */
-  margin-top: calc(1.1rem + 1.6rem);
+  align-self: center;
+  padding-top: 1.1rem;
+  text-align: center;
 }
 
 /* Loopback SVG overlay: sits above the pipeline-flow, starts at Specc (right)
@@ -205,10 +213,11 @@ h1, h2, h3 { line-height: 1.25; }
 }
 .pipe-loop-text {
   display: none;
+  width: 100%;
   text-align: center;
   color: var(--accent);
   font-size: 0.82rem;
-  margin-top: 0.4rem;
+  margin: 0.4rem auto 0;
   opacity: 0.85;
 }
 .pipe-node {
@@ -307,11 +316,13 @@ h1, h2, h3 { line-height: 1.25; }
 }
 .pipe-arrow {
   align-self: center;
+  justify-self: center;
   color: var(--accent);
   font-size: 1.1rem;
   opacity: 0.7;
   flex: 0 0 auto;
   padding: 0 0.1rem;
+  text-align: center;
 }
 
 
@@ -452,27 +463,30 @@ footer .footer-links {
   .pipe-node {
     max-width: none;
     width: 100%;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 0.75rem;
-    padding: 0.7rem 0.9rem;
-    text-align: left;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.85rem 0.9rem 0.75rem;
+    text-align: center;
   }
   .pipe-emoji { font-size: 1.7rem; }
   .pipe-name { font-size: 1.05rem; }
-  .pipe-role { margin-left: auto; }
+  .pipe-role { margin-left: 0; text-align: center; }
   .pipe-arrow {
     align-self: center;
+    justify-self: center;
     transform: rotate(90deg);
     font-size: 1.1rem;
     padding: 0.1rem 0;
+    text-align: center;
   }
   .pipe-phase {
-    text-align: left;
-    margin-bottom: 0.15rem;
-    margin-left: 0.1rem;
+    text-align: center;
+    margin-bottom: 0.3rem;
+    margin-left: 0;
   }
-  .pipeline-flow > .pipe-arrow { margin-top: 0; }
+  .pipeline-flow > .pipe-arrow { padding-top: 0; margin-top: 0; }
   /* On mobile, swap SVG loopback for a text fallback. */
   .pipe-loop-svg { display: none; }
   .pipe-loop-text { display: block; }
@@ -484,7 +498,8 @@ footer .footer-links {
   }
   .pipe-peer-arrow {
     justify-self: center;
-    margin-top: 0;
+    align-self: center;
+    text-align: center;
     transform: rotate(90deg);
     /* hide the side dashes on mobile; they don't read well rotated */
   }
@@ -493,13 +508,14 @@ footer .footer-links {
   .pipe-col { max-width: none; }
   .pipeline-row--solo { grid-template-columns: 1fr; max-width: 320px; }
   .pipe-node--orch {
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 0.75rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
     padding: 0.65rem 0.85rem;
-    text-align: left;
+    text-align: center;
   }
-  .pipe-node--orch .pipe-role { margin-left: auto; }
+  .pipe-node--orch .pipe-role { margin-left: 0; text-align: center; }
 }
 
 @media (max-width: 520px) {
