@@ -279,6 +279,7 @@ const projects = [
         const card = document.getElementById(cardId);
         if (!card) return;
         const isOpen = node.getAttribute('aria-expanded') === 'true';
+        const flowWrap = document.querySelector('.pipeline-flow-wrap');
         // Close all first
         nodes.forEach((n) => {
           n.setAttribute('aria-expanded', 'false');
@@ -289,10 +290,18 @@ const projects = [
             c.classList.remove('pipe-card--open');
           }
         });
+        if (flowWrap) flowWrap.style.setProperty('--loop-card-h', '0px');
         // Open this one if it was closed
         if (!isOpen) {
           node.setAttribute('aria-expanded', 'true');
           card.hidden = false;
+          // Measure the card's natural height so the flow-wrap reserves just
+          // enough space below the row (no wasted gap under short cards).
+          // Only applies to loop cards; orchestrator cards aren't inside .pipeline-flow.
+          if (flowWrap && flowWrap.contains(card)) {
+            const h = card.offsetHeight;
+            flowWrap.style.setProperty('--loop-card-h', h + 'px');
+          }
           // force reflow so the transition runs
           requestAnimationFrame(() => card.classList.add('pipe-card--open'));
         }
