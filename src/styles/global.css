@@ -478,7 +478,15 @@ footer .footer-links {
   }
   .pipe-peer-arrow::before,
   .pipe-peer-arrow::after { display: none; }
-  .pipe-col { max-width: none; }
+  /* Match all 8 agent cards + the Human CD card to the same visual width on mobile.
+     The duo/solo rows cap at 320px; constrain the loop-flow and its columns the
+     same way so every card in the diagram renders identically. */
+  .pipeline-flow {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .pipe-col { max-width: none; width: 100%; }
   .pipeline-row--solo { grid-template-columns: 1fr; max-width: 320px; }
   .pipe-node--orch .pipe-role { margin-left: 0; text-align: center; }
 }
