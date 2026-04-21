@@ -63,7 +63,6 @@ h1, h2, h3 { line-height: 1.25; }
 .hero-sub {
   color: var(--muted);
   font-size: 0.9rem;
-  max-width: 62ch;
   margin-bottom: 1.25rem;
 }
 
@@ -112,30 +111,12 @@ h1, h2, h3 { line-height: 1.25; }
      uses for the duo/flow rows. */
   max-width: none;
 }
-.pipeline-row--duo {
-  grid-template-columns: minmax(88px, 140px) auto minmax(88px, 140px);
-  justify-content: center;
-  align-items: start;
-  justify-items: center;
-  max-width: 560px;
-  gap: 0.5rem 0.75rem;
-}
-.pipeline-row--duo > .pipe-col { width: 100%; }
-.pipe-peer-arrow {
-  /* Vertically center to the orchestrator-node midline (the column holds only
-     a node + optional hidden card, so centering on the grid cell works).
-     Styled to match .pipe-arrow / .pipeline-downarrow: same accent color,
-     same opacity, same font size. Only difference: ↔ glyph (arrowheads on
-     both ends) instead of ▶ because this is a bidirectional peer link. */
-  align-self: center;
-  justify-self: center;
-  text-align: center;
-  color: var(--accent);
-  opacity: 0.7;
-  font-size: 1.1rem;
-  line-height: 1;
-  padding: 0 0.1rem;
-  flex: 0 0 auto;
+/* Orchestrator cards (Human CD, The Bott, Riv) span wider than their 140px
+   node so the body copy is readable. Sit directly below the node. */
+.pipeline-row--solo + .pipe-card {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .pipeline-downarrow {
   display: block;
@@ -152,6 +133,17 @@ h1, h2, h3 { line-height: 1.25; }
 .pipeline-flow-wrap {
   position: relative;
   margin: 0.3rem 0 1.25rem;
+  /* Reserve space for an absolutely-positioned open card below the flow row. */
+  padding-bottom: 0;
+  transition: padding-bottom 0.2s ease;
+}
+/* Reserve space below the flow row on desktop so the absolute-positioned card
+   doesn't overlap .pipeline-copy. Not needed on mobile (cards are in-flow). */
+.pipeline-flow-wrap:has(.pipe-card--open) {
+  padding-bottom: 14rem;
+}
+@media (max-width: 720px) {
+  .pipeline-flow-wrap:has(.pipe-card--open) { padding-bottom: 0; }
 }
 .pipeline-flow {
   display: flex;
@@ -160,7 +152,7 @@ h1, h2, h3 { line-height: 1.25; }
   justify-content: center;
   gap: 0.25rem;
   padding: 0.25rem 0;
-  overflow-x: auto;
+  overflow: visible;
   position: relative;
   z-index: 1;
 }
@@ -174,7 +166,26 @@ h1, h2, h3 { line-height: 1.25; }
   max-width: 140px;
 }
 .pipe-col .pipe-node { max-width: none; flex: 0 0 auto; }
-.pipe-col .pipe-card { margin-left: 0; margin-right: 0; max-width: none; }
+/* Loop-row cards: anchor to .pipeline-flow so they center under the entire
+   flow regardless of which column was clicked. Prevents edge cards (Gizmo,
+   Specc) from overflowing. ▶ arrows stay pristine because the card never
+   occupies column space. Only one card open at a time (JS enforces). */
+.pipeline-flow { position: relative; }
+.pipe-col .pipe-card {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translateX(-50%) translateY(-4px);
+  margin: 0.5rem 0 0 0;
+  width: min(640px, 100%);
+  max-width: 640px;
+  z-index: 2;
+}
+.pipe-col .pipe-card.pipe-card--open {
+  transform: translateX(-50%) translateY(0);
+}
 
 /* Arrows in the loop align with the node's vertical center. */
 .pipeline-flow > .pipe-arrow {
@@ -464,27 +475,25 @@ footer .footer-links {
   /* On mobile, swap SVG loopback for a text fallback. */
   .pipe-loop-svg { display: none; }
   .pipe-loop-text { display: block; }
-  /* Stack the orchestrator row vertically; the peer arrow becomes a vertical dashed hint. */
-  .pipeline-row--duo {
-    grid-template-columns: 1fr;
-    max-width: 320px;
-    gap: 0.4rem;
-  }
-  .pipe-peer-arrow {
-    justify-self: center;
-    align-self: center;
-    text-align: center;
-    transform: rotate(90deg);
-  }
-  /* Match all 8 agent cards + the Human CD card to the same visual width on mobile.
-     The duo/solo rows cap at 320px; constrain the loop-flow and its columns the
+  /* Match all agent cards + the Human CD card to the same visual width on mobile.
+     The solo rows cap at 320px; constrain the loop-flow and its columns the
      same way so every card in the diagram renders identically. */
   .pipeline-flow {
     max-width: 320px;
     margin-left: auto;
     margin-right: auto;
+    flex-direction: column;
+    align-items: stretch;
   }
-  .pipe-col { max-width: none; width: 100%; }
+  .pipe-col { max-width: none; width: 100%; position: static; }
+  .pipe-col .pipe-card {
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: none;
+    margin: 0.5rem 0 0 0;
+  }
+  .pipe-col .pipe-card.pipe-card--open { transform: none; }
   .pipeline-row--solo { grid-template-columns: 1fr; max-width: 320px; }
   .pipe-node--orch .pipe-role { margin-left: 0; text-align: center; }
 }
